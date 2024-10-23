@@ -30,7 +30,6 @@ public class Booking {
     private Integer totalPrice;
     private Boolean isDepositPaid;
     private Date    checkIn;
-    private Date    checkOut;
     private String  additionalNeeds;
 
     Booking() {
@@ -98,14 +97,6 @@ public class Booking {
         this.checkIn = checkIn;
     }
 
-    @JsonProperty("checkout")
-    public Date getCheckOut() {
-        return this.checkOut;
-    }
-
-    public void setCheckOut(Date checkOut) {
-        this.checkOut = checkOut;
-    }
 
     @JsonProperty("additionalneeds")
     public String getAdditionalNeeds() {
