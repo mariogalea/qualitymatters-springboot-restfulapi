@@ -36,14 +36,13 @@ public class Booking {
 
     }
 
-    Booking(String firstName, String lastName, Integer totalPrice, Boolean isDepositPaid, Date checkIn, Date checkOut, String additionalNeeds) {
+    Booking(String firstName, String lastName, Integer totalPrice, Boolean isDepositPaid, Date checkIn, String additionalNeeds) {
 
         this.firstName       = firstName;
         this.lastName        = lastName;
         this.totalPrice      = totalPrice;
         this.isDepositPaid   = isDepositPaid;
         this.checkIn         = checkIn;
-        this.checkOut        = checkOut;
         this.additionalNeeds = additionalNeeds;
 
     }
