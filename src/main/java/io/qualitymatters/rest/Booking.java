@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 
 import java.util.Date;
 
-/*
+/**
     {
         "id": 1,
         "firstname": "Mario",
@@ -19,6 +19,8 @@ import java.util.Date;
         "additionalneeds": "Swimming Pool Access Granted"
     }
 
+    N.B.
+    For simplicity. totalprice is of type Integer.  Whenever dealing with currency, always use BigDecimal in Java.
  */
 
 @Entity
@@ -71,7 +73,7 @@ public class Booking {
     }
 
     @JsonProperty("totalprice")
-    public int getTotalPrice() {
+    public Integer getTotalPrice() {
         return this.totalPrice;
     }
 
