@@ -15,7 +15,6 @@ import java.util.Date;
         "totalprice": 600,
         "depositpaid": true,
         "checkin": "2013-02-23",
-        "checkout": "2014-10-23",
         "additionalneeds": "Swimming Pool Access Granted"
     }
 
