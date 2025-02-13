@@ -19,8 +19,8 @@ public class BookingLoadDb {
     @Bean
     CommandLineRunner initDatabase(BookingJpaRepo repository) {
         return args -> {
-            log.info("Preloading " + repository.save(new Booking("Mario", "Galea", 600, true, new Date(), "All Inclusive Resident")));
-            log.info("Preloading " + repository.save(new Booking("Vincent", "Vega", 900, true, new Date(), "Marcellus Wallace Henchman")));
+            log.info("Preloading " + repository.save(new Booking("Mario", "Galea")));
+            log.info("Preloading " + repository.save(new Booking("Vincent", "Vega")));
         };
     }
 }

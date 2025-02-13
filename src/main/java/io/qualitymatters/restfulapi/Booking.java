@@ -1,26 +1,25 @@
 package io.qualitymatters.restfulapi;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Objects;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
-import java.util.Date;
-
 /**
+ * Entity is a JPA Annotation to make this object ready for storage in a JPA-based data store.
+ * The Booking Object is has the below JSON Properties.
+ * 
+ * 
+ * JSON Structure 
     {
         "id": 1,
         "firstname": "Mario",
-        "lastname": "Galea",
-        "totalprice": 600,
-        "depositpaid": true,
-        "checkin": "2013-02-23",
-        "additionalneeds": "Swimming Pool Access Granted"
+        "lastname": "Galea"
     }
 
-    N.B.
-    For simplicity. totalprice is of type Integer.  Whenever dealing with currency, always use BigDecimal in Java.
- */
+ **/
+
 
 @Entity
 public class Booking {
@@ -28,32 +27,23 @@ public class Booking {
     private @Id @GeneratedValue Long id;
     private String  firstName;
     private String  lastName;
-    private Integer totalPrice;
-    private Boolean isDepositPaid;
-    private Date    checkIn;
-    private String  additionalNeeds;
+
 
     Booking() {
 
     }
 
-    Booking(String firstName, String lastName, Integer totalPrice, Boolean isDepositPaid, Date checkIn, String additionalNeeds) {
+    Booking(String firstName, String lastName) {
 
         this.firstName       = firstName;
         this.lastName        = lastName;
-        this.totalPrice      = totalPrice;
-        this.isDepositPaid   = isDepositPaid;
-        this.checkIn         = checkIn;
-        this.additionalNeeds = additionalNeeds;
 
     }
 
-    @JsonProperty("id")
     public Long getId() {
         return this.id;
     }
 
-    @JsonProperty("firstname")
     public String getFirstName() {
         return this.firstName;
     }
@@ -62,7 +52,6 @@ public class Booking {
         this.firstName = firstName;
     }
 
-    @JsonProperty("lastname")
     public String getLastName() {
         return this.lastName;
     }
@@ -71,39 +60,28 @@ public class Booking {
         this.lastName = lastName;
     }
 
-    @JsonProperty("totalprice")
-    public Integer getTotalPrice() {
-        return this.totalPrice;
-    }
+    @Override
+    public boolean equals(Object o) {
 
-    public void setTotalPrice(Integer totalPrice) {
-        this.totalPrice = totalPrice;
-    }
+    if (this == o)
+      return true;
+    if (!(o instanceof Booking))
+      return false;
 
-    @JsonProperty("depositpaid")
-    public boolean getIsDepositPaid() {
-        return this.isDepositPaid;
-    }
+    Booking booking = (Booking) o;
+    return Objects.equals(this.id, booking.id) 
+        && Objects.equals(this.firstName, booking.firstName)
+        && Objects.equals(this.lastName, booking.lastName);
+  }
 
-    public void setIsDepositPaid(boolean isDepositPaid) {
-        this.isDepositPaid = isDepositPaid; }
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.id, this.firstName, this.lastName);
+  }
 
-    @JsonProperty("checkin")
-    public Date getCheckIn() {
-        return this.checkIn;
-    }
+  @Override
+  public String toString() {
+    return "Booking{" + "id=" + this.id + ", firstName='" + this.firstName + '\'' + ", lastName='" + this.lastName + '\'' + '}';
+  }
 
-    public void setCheckIn(Date checkIn) {
-        this.checkIn = checkIn;
-    }
-
-
-    @JsonProperty("additionalneeds")
-    public String getAdditionalNeeds() {
-        return this.additionalNeeds;
-    }
-
-    public void setAdditionalNeeds(String additionalNeeds) {
-        this.additionalNeeds = additionalNeeds;
-    }
 }
