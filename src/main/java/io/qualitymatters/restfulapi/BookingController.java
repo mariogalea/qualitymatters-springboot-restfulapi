@@ -1,6 +1,10 @@
 package io.qualitymatters.restfulapi;
 
+import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
+
+import org.springframework.hateoas.EntityModel;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 import java.util.List;
 
@@ -34,10 +38,14 @@ class BookingController {
   
   // Retrieve Single booking
   @GetMapping("/bookings/{id}")
-  Booking one(@PathVariable Long id) {
+  EntityModel<Booking> one(@PathVariable Long id) {
     
-    return repository.findById(id)
-      .orElseThrow(() -> new BookingNotFoundException(id));
+    Booking booking = repository.findById(id)
+    .orElseThrow(() -> new BookingNotFoundException(id));
+
+    return EntityModel.of(booking,
+      linkTo(methodOn(BookingController.class).one(id)).withSelfRel(),
+      linkTo(methodOn(BookingController.class).all()).withRel("bookings"));
   }
 
 
