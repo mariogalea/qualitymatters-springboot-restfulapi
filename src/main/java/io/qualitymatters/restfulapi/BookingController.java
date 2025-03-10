@@ -1,5 +1,6 @@
 package io.qualitymatters.restfulapi;
 
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
 
@@ -7,6 +8,7 @@ import org.springframework.hateoas.EntityModel;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *  Data returned by each method is sent to the Response Body - RestController Annotation.
@@ -22,21 +24,39 @@ class BookingController {
   }
 
 
-  // Aggregate root
-  // tag::get-aggregate-root[]
+  /* 
+   * CollectionModel<> is another Spring HATEOAS container. It encapsulates collections of resources 
+   * instead of a single resource entity, such as EntityModel<>.
+   * CollectionModel<>, too, lets you include links.
+   * Do not let that first statement slip by. What does "encapsulating collections" mean? Collections of employees?
+   * Not quite.
+   * It should encapsulate collections of bookings resources.
+  */
   @GetMapping("/bookings")
-  List<Booking> all() {
-    return repository.findAll();
-  }
-  // end::get-aggregate-root[]
+  CollectionModel<EntityModel<Booking>> all() {
+
+  List<EntityModel<Booking>> bookings = repository.findAll().stream()
+      .map(booking -> EntityModel.of(booking,
+          linkTo(methodOn(BookingController.class).one(booking.getId())).withSelfRel(),
+          linkTo(methodOn(BookingController.class).all()).withRel("bookings")))
+      .collect(Collectors.toList());
+
+  return CollectionModel.of(bookings, linkTo(methodOn(BookingController.class).all()).withSelfRel());
+}
 
   @PostMapping("/bookings")
   Booking newBooking(@RequestBody Booking newBooking) {
     return repository.save(newBooking);
   }
 
-  
-  // Retrieve Single booking
+  /*
+   * The return type - EntityModel<T> is a container (of type Booking) from Spring HATEOAS that includes both data and a collection of links. 
+   * linkTo(methodOn(Booking Controller.class).one(id)).withSelfRel() asks that Spring 
+   * HATEOAS to build a link (WebMVCLinkBuilder)to the one method of BookingController and flag it as a self link.
+   * linkTo(methodOn(EmployeeController.class).all()).withRel("bookings") asks Spring 
+   * HATEOAS to build a link to the aggregate root, all(), and call it "bookings".
+
+   */
   @GetMapping("/bookings/{id}")
   EntityModel<Booking> one(@PathVariable Long id) {
     
