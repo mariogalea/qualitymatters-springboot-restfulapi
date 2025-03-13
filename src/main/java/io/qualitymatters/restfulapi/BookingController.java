@@ -4,7 +4,6 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.hateoas.EntityModel;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 import java.util.List;
@@ -18,13 +17,18 @@ import java.util.stream.Collectors;
 class BookingController {
 
   private final BookingJpaRepo repository;
+  private final BookingModelAssembler assembler;
 
-  BookingController(BookingJpaRepo repository) {
+  BookingController(BookingJpaRepo repository, BookingModelAssembler assembler) {
+
     this.repository = repository;
+    this.assembler = assembler;
   }
 
 
   /* 
+   * Get all Bookings - HTTP GET Method
+   *
    * CollectionModel<> is another Spring HATEOAS container. It encapsulates collections of resources 
    * instead of a single resource entity, such as EntityModel<>.
    * CollectionModel<>, too, lets you include links.
@@ -36,24 +40,28 @@ class BookingController {
   CollectionModel<EntityModel<Booking>> all() {
 
   List<EntityModel<Booking>> bookings = repository.findAll().stream()
-      .map(booking -> EntityModel.of(booking,
-          linkTo(methodOn(BookingController.class).one(booking.getId())).withSelfRel(),
-          linkTo(methodOn(BookingController.class).all()).withRel("bookings")))
+      .map(assembler::toModel) //
       .collect(Collectors.toList());
 
-  return CollectionModel.of(bookings, linkTo(methodOn(BookingController.class).all()).withSelfRel());
-}
+      return CollectionModel.of(bookings, linkTo(methodOn(BookingController.class).all()).withSelfRel());
+  }
 
+      
+  /*
+   * Upate Booking By ID - HTTP POST Method 
+   */
   @PostMapping("/bookings")
   Booking newBooking(@RequestBody Booking newBooking) {
     return repository.save(newBooking);
   }
 
   /*
+   * Get Mapping By ID - HTTP GET Method
+   *
    * The return type - EntityModel<T> is a container (of type Booking) from Spring HATEOAS that includes both data and a collection of links. 
    * linkTo(methodOn(Booking Controller.class).one(id)).withSelfRel() asks that Spring 
    * HATEOAS to build a link (WebMVCLinkBuilder)to the one method of BookingController and flag it as a self link.
-   * linkTo(methodOn(EmployeeController.class).all()).withRel("bookings") asks Spring 
+   * linkTo(methodOn(BookingController.class).all()).withRel("bookings") asks Spring 
    * HATEOAS to build a link to the aggregate root, all(), and call it "bookings".
 
    */
@@ -63,13 +71,20 @@ class BookingController {
     Booking booking = repository.findById(id)
     .orElseThrow(() -> new BookingNotFoundException(id));
 
-    return EntityModel.of(booking,
-      linkTo(methodOn(BookingController.class).one(id)).withSelfRel(),
-      linkTo(methodOn(BookingController.class).all()).withRel("bookings"));
+    return assembler.toModel(booking);
+
+
+    /*
+      return EntityModel.of(booking,
+        linkTo(methodOn(BookingController.class).one(id)).withSelfRel(),
+        linkTo(methodOn(BookingController.class).all()).withRel("bookings"));
+    */
   }
 
 
-  // Replace Booking
+  /* 
+   * Update Booking - HTTP PUT Method
+   */ 
   @PutMapping("/bookings/{id}")
   Booking replaceBooking(@RequestBody Booking newBooking, @PathVariable Long id) {
     
@@ -84,7 +99,10 @@ class BookingController {
       });
   }
 
-  // Delete Booking
+
+  /*
+   * Delete Booking - HTTP DEL Method
+   */
   @DeleteMapping("/bookings/{id}")
   void deleteBooking(@PathVariable Long id) {
     repository.deleteById(id);
