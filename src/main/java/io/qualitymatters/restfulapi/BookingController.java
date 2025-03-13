@@ -25,7 +25,6 @@ class BookingController {
     this.assembler = assembler;
   }
 
-
   /* 
    * Get all Bookings - HTTP GET Method
    *
@@ -45,8 +44,7 @@ class BookingController {
 
       return CollectionModel.of(bookings, linkTo(methodOn(BookingController.class).all()).withSelfRel());
   }
-
-      
+  
   /*
    * Upate Booking By ID - HTTP POST Method 
    */
@@ -63,7 +61,6 @@ class BookingController {
    * HATEOAS to build a link (WebMVCLinkBuilder)to the one method of BookingController and flag it as a self link.
    * linkTo(methodOn(BookingController.class).all()).withRel("bookings") asks Spring 
    * HATEOAS to build a link to the aggregate root, all(), and call it "bookings".
-
    */
   @GetMapping("/bookings/{id}")
   EntityModel<Booking> one(@PathVariable Long id) {
@@ -73,14 +70,7 @@ class BookingController {
 
     return assembler.toModel(booking);
 
-
-    /*
-      return EntityModel.of(booking,
-        linkTo(methodOn(BookingController.class).one(id)).withSelfRel(),
-        linkTo(methodOn(BookingController.class).all()).withRel("bookings"));
-    */
   }
-
 
   /* 
    * Update Booking - HTTP PUT Method
@@ -98,7 +88,6 @@ class BookingController {
         return repository.save(newBooking);
       });
   }
-
 
   /*
    * Delete Booking - HTTP DEL Method
