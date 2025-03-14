@@ -14,12 +14,8 @@ mvn clean spring-boot:run
 ```
 
 ### Swagger Access
-Run the Application and navigate to the below URL to get Test API with Swagger.
+Run the Application, and navigate to the below URL to get all Swagger tests functioanlity towards the APIs.  This helps in automating API calls and making sure that the APIs are returning a value.  Useful the BDD Project 
 
 ```terminal
 http://localhost:8080/swagger-ui/index.html
 ```
-
-
-
-
