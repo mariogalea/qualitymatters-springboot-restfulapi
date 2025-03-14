@@ -17,7 +17,7 @@ class BookingModelAssembler implements RepresentationModelAssembler<Booking, Ent
   public EntityModel<Booking> toModel(Booking booking) {
 
     return EntityModel.of(booking, //
-        linkTo(methodOn(BookingController.class).one(booking.getId())).withSelfRel(),
-        linkTo(methodOn(BookingController.class).all()).withRel("bookings"));
+        linkTo(methodOn(BookingController.class).one(booking.getId())).withRel("selfLink"),
+        linkTo(methodOn(BookingController.class).all()).withRel("bookingsLink"));
   }
 }

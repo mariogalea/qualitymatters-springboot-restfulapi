@@ -45,7 +45,7 @@ class BookingController {
   */
   @Operation(summary = "Get all Bookings", description = "Retrieve a collection of bookings in the system")
   @ApiResponses(value = {
-          @ApiResponse(responseCode = "200", description = "Users retrieved successfully",
+          @ApiResponse(responseCode = "200", description = "Bookings retrieved successfully",
                   content = @Content(schema = @Schema(implementation = Booking.class)))
   })
   @GetMapping("/bookings")
@@ -55,7 +55,7 @@ class BookingController {
       .map(assembler::toModel) //
       .collect(Collectors.toList());
 
-      return CollectionModel.of(bookings, linkTo(methodOn(BookingController.class).all()).withSelfRel());
+      return CollectionModel.of(bookings, linkTo(methodOn(BookingController.class).all()).withRel("bookingsLink"));
   }
   
   /*
@@ -74,7 +74,7 @@ class BookingController {
   }
 
   /*
-   * Get Mapping By ID - HTTP GET Method
+   * Get Booking By ID - HTTP GET Method
    *
    * The return type - EntityModel<T> is a container (of type Booking) from Spring HATEOAS that includes both data and a collection of links. 
    * linkTo(methodOn(Booking Controller.class).one(id)).withSelfRel() asks that Spring 
