@@ -39,7 +39,7 @@ class BookingController {
    * CollectionModel<> is another Spring HATEOAS container. It encapsulates collections of resources 
    * instead of a single resource entity, such as EntityModel<>.
    * CollectionModel<>, too, lets you include links.
-   * Do not let that first statement slip by. What does "encapsulating collections" mean? Collections of employees?
+   * Do not let that first statement slip by. What does "encapsulating collections" mean? Collections of bookings?
    * Not quite.
    * It should encapsulate collections of bookings resources.
   */
