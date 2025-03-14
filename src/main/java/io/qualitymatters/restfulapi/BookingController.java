@@ -4,6 +4,13 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 import java.util.List;
@@ -14,6 +21,7 @@ import java.util.stream.Collectors;
  *  Routes for each operation (@GetMapping, @PostMapping, @PutMapping and @DeleteMapping) are equivalent to HTTP GET, POST, PUT, and DELETE calls)
  */
 @RestController
+@Tag(name = "Booking Management", description = "RestfulAPIs for managing bookings")
 class BookingController {
 
   private final BookingJpaRepo repository;
@@ -35,6 +43,11 @@ class BookingController {
    * Not quite.
    * It should encapsulate collections of bookings resources.
   */
+  @Operation(summary = "Get all Bookings", description = "Retrieve a collection of bookings in the system")
+  @ApiResponses(value = {
+          @ApiResponse(responseCode = "200", description = "Users retrieved successfully",
+                  content = @Content(schema = @Schema(implementation = Booking.class)))
+  })
   @GetMapping("/bookings")
   CollectionModel<EntityModel<Booking>> all() {
 
@@ -48,6 +61,13 @@ class BookingController {
   /*
    * Upate Booking By ID - HTTP POST Method 
    */
+  @Operation(summary = "Create a new booking", description = "Add a new booking to the system")
+  @ApiResponses(value = {
+          @ApiResponse(responseCode = "200", description = "Booking created successfully",
+                  content = @Content(schema = @Schema(implementation = Booking.class))),
+          @ApiResponse(responseCode = "400", description = "Invalid request data",
+                  content = @Content(schema = @Schema()))
+  })
   @PostMapping("/bookings")
   Booking newBooking(@RequestBody Booking newBooking) {
     return repository.save(newBooking);
@@ -62,6 +82,13 @@ class BookingController {
    * linkTo(methodOn(BookingController.class).all()).withRel("bookings") asks Spring 
    * HATEOAS to build a link to the aggregate root, all(), and call it "bookings".
    */
+  @Operation(summary = "Get booking by ID", description = "Retrieve booking details using the ID")
+  @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Booking found",
+                    content = @Content(schema = @Schema(implementation = Booking.class))),
+            @ApiResponse(responseCode = "404", description = "Booking not found",
+                    content = @Content(schema = @Schema()))
+    })
   @GetMapping("/bookings/{id}")
   EntityModel<Booking> one(@PathVariable Long id) {
     
@@ -75,6 +102,13 @@ class BookingController {
   /* 
    * Update Booking - HTTP PUT Method
    */ 
+  @Operation(summary = "Update a booking", description = "Update an existing booking's details")
+  @ApiResponses(value = {
+          @ApiResponse(responseCode = "200", description = "Booking updated successfully",
+                  content = @Content(schema = @Schema(implementation = Booking.class))),
+          @ApiResponse(responseCode = "404", description = "Booking not found",
+                  content = @Content(schema = @Schema()))
+  })
   @PutMapping("/bookings/{id}")
   Booking replaceBooking(@RequestBody Booking newBooking, @PathVariable Long id) {
     
@@ -92,6 +126,12 @@ class BookingController {
   /*
    * Delete Booking - HTTP DEL Method
    */
+  @Operation(summary = "Delete a booking", description = "Delete a booking from the system using the ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Booking deleted successfully"),
+            @ApiResponse(responseCode = "404", description = "Booking not found",
+                    content = @Content(schema = @Schema()))
+    })
   @DeleteMapping("/bookings/{id}")
   void deleteBooking(@PathVariable Long id) {
     repository.deleteById(id);

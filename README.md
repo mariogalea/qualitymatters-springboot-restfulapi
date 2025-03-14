@@ -13,6 +13,13 @@ All of this was created to overcome the freeware Restful API sites limitations e
 mvn clean spring-boot:run
 ```
 
+### Swagger Access
+Run the Application and navigate to the below URL to get Test API with Swagger.
+
+```terminal
+http://localhost:8080/swagger-ui/index.html
+```
+
 
 
 
