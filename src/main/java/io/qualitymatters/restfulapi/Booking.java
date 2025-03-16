@@ -6,21 +6,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
-/**
- * Entity is a JPA Annotation to make this object ready for storage in a JPA-based data store.
- * The Booking Object is has the below JSON Properties.
- * 
- * 
- * JSON Structure 
-    {
-        "id": 1,
-        "firstname": "Mario",
-        "lastname": "Galea"
-    }
-
- **/
-
-
 @Entity
 public class Booking {
 

@@ -13,6 +13,7 @@ class BookingModelAssembler implements RepresentationModelAssembler<Booking, Ent
   /*
    * Converts the non-model object booking, into a model based entity.
    */
+  @SuppressWarnings("null")
   @Override
   public EntityModel<Booking> toModel(Booking booking) {
 

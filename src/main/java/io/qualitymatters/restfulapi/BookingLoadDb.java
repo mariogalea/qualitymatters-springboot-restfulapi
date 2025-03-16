@@ -6,8 +6,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Date;
-
 /**
  * This class executes once the Bean CommandLineRunner on the app context is loaded and c 2 entities in the DB
  */
