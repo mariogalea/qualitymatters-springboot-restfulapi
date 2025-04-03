@@ -68,7 +68,7 @@ class BookingController {
           @ApiResponse(responseCode = "400", description = "Invalid request data",
                   content = @Content(schema = @Schema()))
   })
-  @PostMapping("/bookings")
+  @PostMapping("/bookings/new")
   Booking newBooking(@RequestBody Booking newBooking) {
     return repository.save(newBooking);
   }
@@ -109,7 +109,7 @@ class BookingController {
           @ApiResponse(responseCode = "404", description = "Booking not found",
                   content = @Content(schema = @Schema()))
   })
-  @PutMapping("/bookings/{id}")
+  @PutMapping("/bookings/update/{id}")
   Booking replaceBooking(@RequestBody Booking newBooking, @PathVariable Long id) {
     
     return repository.findById(id)
@@ -128,11 +128,11 @@ class BookingController {
    */
   @Operation(summary = "Delete a booking", description = "Delete a booking from the system using the ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Booking deleted successfully"),
+            @ApiResponse(responseCode = "200", description = "Booking deleted successfully"),
             @ApiResponse(responseCode = "404", description = "Booking not found",
                     content = @Content(schema = @Schema()))
     })
-  @DeleteMapping("/bookings/{id}")
+  @DeleteMapping("/bookings/delete/{id}")
   void deleteBooking(@PathVariable Long id) {
     repository.deleteById(id);
   }
