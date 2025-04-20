@@ -61,7 +61,7 @@ class BookingController {
   /*
    * Upate Booking By ID - HTTP POST Method 
    */
-  @Operation(summary = "Create a new booking", description = "Add a new booking to the system")
+  @Operation(summary = "Add a new booking", description = "Add a new booking to the system")
   @ApiResponses(value = {
           @ApiResponse(responseCode = "200", description = "Booking created successfully",
                   content = @Content(schema = @Schema(implementation = Booking.class))),
