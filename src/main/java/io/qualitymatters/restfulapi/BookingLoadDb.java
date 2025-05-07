@@ -20,11 +20,7 @@ public class BookingLoadDb {
             log.info("Preloading " + repository.save(new Booking("Mario", "Galea")));
             log.info("Preloading " + repository.save(new Booking("Vincent", "Vega")));
             log.info("Preloading " + repository.save(new Booking("Jackie", "Brown")));
-            log.info("Preloading " + repository.save(new Booking("Quentin", "Tarantino")));
-            log.info("Preloading " + repository.save(new Booking("Uma", "Thurman")));
-            log.info("Preloading " + repository.save(new Booking("Marcelo", "Wallace")));
-            log.info("Preloading " + repository.save(new Booking("Mia", "Wallace")));
-            log.info("Preloading " + repository.save(new Booking("Leo", "Fender")));
+
 
         };
     }
