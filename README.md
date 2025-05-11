@@ -1,7 +1,8 @@
 # qualitymatters-springboot-restfulapi
 
 ## Application Overview
-A simple springboot application service that manages bookings (any kind of booking - use your imagination).  It stores bookings in an H2 in-memory database, with access via JPA.  The app is wrapped with Spring MVC layer to allow access over the Internet.
+A simple springboot application service that manages bookings (any kind of booking - use your imagination).    
+It stores bookings in an H2 in-memory database, with access via JPA.  The app is wrapped with Spring MVC layer to allow access over the Internet.
 
 The application also references HATEOES Spring project aimed to write hypermedia-driven outputs.
 
