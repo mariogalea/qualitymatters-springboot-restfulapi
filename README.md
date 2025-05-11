@@ -16,10 +16,10 @@ mvn clean spring-boot:run
 ## Basic Authentication
 Every API call requires basic authentication, therefore, when calling the API programmatically, the below credentials needs to be passed
 
-Username: admin
+Username: admin  
 Password: secret
 
-Credentials can be modified in the application.properties file
+Credentials can be modified in the application.properties file.
 
 ### Swagger Access
 Run the Application, and navigate to the below URL to get all Swagger tests functioanlity towards the APIs.  This helps in automating API calls and making sure that the APIs are returning a value. 
@@ -27,5 +27,5 @@ Run the Application, and navigate to the below URL to get all Swagger tests func
 ```terminal
 http://localhost:8080/swagger-ui/index.html
 ```
-Swagger access needs basic authentication as well.
+Swagger access needs basic authentication.
 
